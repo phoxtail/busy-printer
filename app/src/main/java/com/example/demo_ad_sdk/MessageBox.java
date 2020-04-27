@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 public class MessageBox extends Dialog {
 
-    int dialogResult;
-    Handler mHandler;
+    private int dialogResult;
+    private Handler mHandler;
 
     public MessageBox(Activity context) {
         super(context);
@@ -22,7 +22,7 @@ public class MessageBox extends Dialog {
         onCreate();
     }
 
-    public void onCreate() {
+    private void onCreate() {
         setContentView(R.layout.messagebox);
         findViewById(R.id.btnCancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,21 +42,22 @@ public class MessageBox extends Dialog {
         return dialogResult;
     }
 
-    public void setDialogResult(int dialogResult) {
+    private void setDialogResult(int dialogResult) {
         this.dialogResult = dialogResult;
     }
 
-    public void endDialog(int result) {
+    private void endDialog(int result) {
         dismiss();
         setDialogResult(result);
-        Message m = mHandler.obtainMessage();
+        Message m;
+        m = mHandler.obtainMessage();
         mHandler.sendMessage(m);
     }
 
     public int showDialog(String Msg, String Title) {
-        TextView TvErrorInfo = (TextView) findViewById(R.id.textViewInfo);
+        TextView TvErrorInfo = findViewById(R.id.textViewInfo);
         TvErrorInfo.setText(Msg);
-        TextView TvTitle = (TextView) findViewById(R.id.textViewTitle);
+        TextView TvTitle = findViewById(R.id.textViewTitle);
         TvTitle.setText(Title);
 
         mHandler = new Handler() {
@@ -69,7 +70,7 @@ public class MessageBox extends Dialog {
         try {
             Looper.getMainLooper();
             Looper.loop();
-        } catch (RuntimeException e2) {
+        } catch (RuntimeException ignored) {
         }
         return dialogResult;
     }

@@ -36,19 +36,18 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (!ListBluetoothDevice()) finish();
-        Button Button1 = (Button) findViewById(R.id.button1);
+        Button Button1 = findViewById(R.id.button1);
         statusBox = new StatusBox(this, Button1);
         Button1.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View arg0) {
                 Print1(SelectedBDAddress);
             }
         });
-
     }
 
     public boolean ListBluetoothDevice() {
-        final List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-        ListView listView = (ListView) findViewById(R.id.listView1);
+        final List<Map<String, String>> list = new ArrayList<>();
+        ListView listView = findViewById(R.id.listView1);
         SimpleAdapter m_adapter = new SimpleAdapter(this, list,
                 android.R.layout.simple_list_item_2,
                 new String[]{"DeviceName", "BDAddress"},
@@ -69,7 +68,7 @@ public class MainActivity extends Activity {
         Set<BluetoothDevice> pairedDevices = myBluetoothAdapter.getBondedDevices();
         if (pairedDevices.size() <= 0) return false;
         for (BluetoothDevice device : pairedDevices) {
-            Map<String, String> map = new HashMap<String, String>();
+            Map<String, String> map = new HashMap<>();
             map.put("DeviceName", device.getName());
             map.put("BDAddress", device.getAddress());
             list.add(map);
@@ -77,10 +76,10 @@ public class MainActivity extends Activity {
         listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 SelectedBDAddress = list.get(arg2).get("BDAddress");
-                if (((ListView) arg0).getTag() != null) {
-                    ((View) ((ListView) arg0).getTag()).setBackgroundDrawable(null);
+                if (arg0.getTag() != null) {
+                    ((View) arg0.getTag()).setBackgroundDrawable(null);
                 }
-                ((ListView) arg0).setTag(arg1);
+                arg0.setTag(arg1);
                 arg1.setBackgroundColor(Color.BLUE);
 
             }
@@ -119,12 +118,10 @@ public class MainActivity extends Activity {
         zpSDK.disconnect();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
-
 }

@@ -15,14 +15,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class StatusBox {
-    View dialogView;
-    PopupWindow popupWindow;
-    View BoxParent;
-    Timer timer;
-    TimerTask timerTask;
-    Handler LooperHandler;
-    Handler TimerHandler;
-    Context ParentContext;
+    private View dialogView;
+    private PopupWindow popupWindow;
+    private View BoxParent;
+    private Timer timer;
+    private TimerTask timerTask;
+    private Handler LooperHandler;
+    private Handler TimerHandler;
 
     public StatusBox(Context context, View parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -30,7 +29,6 @@ public class StatusBox {
         dialogView.setBackgroundResource(R.layout.statusbox_shape);
         popupWindow = new PopupWindow(dialogView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);//创建PopupWindow实例
         BoxParent = parent;
-        ParentContext = context;
 
         timer = new Timer();
 
@@ -55,7 +53,7 @@ public class StatusBox {
     }
 
     public void Show(String Msg) {
-        TextView TvErrorInfo = (TextView) dialogView.findViewById(R.id.textViewInfo);
+        TextView TvErrorInfo = dialogView.findViewById(R.id.textViewInfo);
         TvErrorInfo.setText(Msg);
         popupWindow.showAtLocation(BoxParent, Gravity.CENTER, 0, 0);
 
@@ -71,7 +69,7 @@ public class StatusBox {
         try {
             Looper.getMainLooper();
             Looper.loop();
-        } catch (RuntimeException e2) {
+        } catch (RuntimeException ignored) {
         }
     }
 
